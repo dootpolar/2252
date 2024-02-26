@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.dropbtn').forEach(function(dropbtn) {
     dropbtn.addEventListener('click', function(event) {
       // Cierra todos los dropdowns antes de abrir uno nuevo
-      closeAllDropdownsExcept(dropbtn.getAttribute('data-dropdown'));
+      closeAllDropdownsExcept(dropbtn.getAttribute('data'));
 
       // Encuentra el dropdown relacionado y lo alterna
-      var dropdown = document.getElementById(dropbtn.getAttribute('data-dropdown'));
+      var dropdown = document.getElementById(dropbtn.getAttribute('data'));
       dropdown.classList.toggle('show');
       
       // Evita que el evento click se propague al documento
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (event.target.tagName === 'A') {
         dropdownContent.classList.remove('show');
       }
-      // Previene la propagación para mantener el dropdown abierto si se hace clic en cualquier otro lugar que no sea un enlace
+      // Previene la propagación para maner el dropdown abierto si se hace clic en cualquier otro lugar que no sea un enlace
       event.stopPropagation();
     });
   });
