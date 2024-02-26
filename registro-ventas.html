@@ -7,6 +7,18 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <title>Ordenes</title>
+<script>
+    (function() {
+      // Aplicar inmediatamente el modo oscuro si es necesario
+      if (localStorage.getItem('darkmode') === '1') {
+        document.documentElement.style.display = 'none';
+        document.documentElement.classList.add('darkmode');
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.documentElement.style.display = '';
+        });
+      }
+    })();
+  </script>
 </head>
 <body>
 
