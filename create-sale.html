@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content='yes' name='apple-mobile-web-app-capable'/>
+    <meta content='#ffffff' name='theme-color'/>
+    <meta content='#ffffff' name='msapplication-navbutton-color'/>
+    <meta content='#ffffff' name='apple-mobile-web-app-status-bar-style'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/ux.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <title>Ordenes</title>
+
+    <script>
+        //<![CDATA[
+          function darkmode_head() {
+                    if (localStorage.getItem("darkmode") == 1) {
+                        document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
+                    }
+           setTimeout(function(){
+                        var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
+                        document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
+                        document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
+                        document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
+           }, 1);
+                }
+          darkmode_head();
+          //]]>
+        </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+
+        <style>
+            /* Reset básico y estilos generales */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: Arial, sans-serif;
+            }
+    
+            /* Barra superior para utilidades */
+            .header-bar {
+                box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0px;
+    left: auto;
+    right: 0px;
+    color: rgb(255, 255, 255);
+    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, margin 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    margin-left: 280px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1200;
+    width: 100%;
+}
+            .header-bar .search-box {
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                padding: 5px 10px;
+                outline: none;
+            }
+    
+            /* Barra de navegación principal */
+            .main-nav {
+                transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: rgba(19, 25, 32, 0.08) 0px 2px 8px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: fixed;
+    left: auto;
+    right: 0px;
+    top: 74px;
+    height: 74px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid rgba(219, 224, 229, 0.65);
+    z-index: 1098;
+    color: rgb(91, 107, 121);
+}
+            .main-nav .centered-container {
+                max-width: 1440px;
+                margin: auto;
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 20px;
+            }
+            .main-nav ul {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                padding-left: 0; /* Eliminar padding predeterminado */
+            }
+            .main-nav ul li {
+                padding: 0 10px;
+            }
+            .main-nav ul li a {
+                text-decoration: none;
+                color: #333;
+                font-weight: 500;
+            }
+            .main-nav ul li a:hover {
+                color: #0275d8;
+            }
+    
+            /* Estilos para el contenido principal */
+            main {
+                padding-top: 100px; /* Asegurarse que el contenido principal no queda detrás de las barras */
+            }
+        </style>
+
+
+        <!-- Barra de utilidades superior -->
+        <header class="header-bar">
+            <div>
+                <input type="text" class="search-box" placeholder="Search...">
+            </div>
+            <div>
+                <!-- Iconos de utilidades (estos deberían ser SVG o fuentes de iconos) -->
+                <span>🔔</span>
+                <span>👤</span>
+                <span>⚙️</span>
+            </div>
+        </header>
+    
+        <!-- Barra de navegación principal -->
+        <header class="main-nav">
+            <div class="centered-container">
+                <ul>
+                    <li><a href="./tablero.html">Tablero</a></li>
+                    <li><a href="#">Inventario</a></li>
+                    <li><a href="#">Lista de Productos</a></li>
+                    <li>
+                        <a href="#">Ventas</a></li>
+                    <ul class="submenu">
+                        <li><a href="#">Detalle de Venta</a>
+                        <li><a href="#">Crear Venta</a></li>
+                    </ul>
+                </li>
+
+                    <li><a href="#">Comprobantes</a></li>
+                    <li><a href="#">Cotizaciones</a></li>
+                    <li><a href="#">Clientes</a></li>
+                    <li><a href="#">Compras</a></li>
+                    <li><a href="#">Detalle de Compras</a></li>
+                    <li><a href="#">Proveedores</a></li>
+                    <li><a href="#">Guia de Remision</a></li>
+                    <li><a href="#">Configuracion</a></li>
+                </ul>
+            </div>
+            
+        </header>
+
+
+
+
+
+
+
+        <main class='main-container'>
+        <div class='container'>
+<style>
+
+
+
+.submenu {
+    display: none;
+    position: absolute;
+    /* Agrega más estilos aquí */
+}
+
+li:hover .submenu {
+    display: block;
+    /* Estilos adicionales para el submenú visible */
+}
+
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .breadcrumbs {
+    font-size: 0.875rem; /* Adjust the size as needed */
+    color: #666;
+    margin: 20px; /* Adjust the margin as needed */
+  }
+  .breadcrumbs a {
+    color: #666;
+    text-decoration: none;
+  }
+  .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
+  .breadcrumbs span {
+    margin: 0 5px;
+  }
+  .page-title {
+    font-size: 2.5rem; /* Adjust the size as needed */
+    color: #333;
+    font-weight: normal;
+    margin: 20px; /* Adjust the margin as needed */
+    text-align: left;
+  }
+</style>
+</head>
+<body>
+
+<div class="breadcrumbs">
+  <a href="#">Home</a> <span>&gt;</span> <a href="#">ventas</a>
+</div>
+<div class="page-title">
+  Registro de Ventas
+</div>
+
+            <div class="card-container">
+                <div class="card">
+                  <div class="card-header">Cantidad de Ventas</div>
+                  <div class="card-value">20</div>
+                </div>
+                <div class="card">
+                  <div class="card-header">Monto Total Ventas</div>
+                  <div class="card-value">S/2,000.00</div>
+                </div>
+                <div class="card">
+                  <div class="card-header">Monto Total Cobrado</div>
+                  <div class="card-value">S/1,500.00</div>
+                </div>
+                <div class="card">
+                  <div class="card-header">Monto Total Pendiente</div>
+                  <div class="card-value">S/500.00</div>
+                </div>
+              </div>
+
+
+
+       
+
+
+    <footer class='footer'>
+        <span class="cred">© Sistema de Ventas</span>
+        </footer>
+
+
+        </div>
+        </main>
+        
+        <div class='modal' id='myModal'>
+        <!-- Modal content -->
+        <div class='modal-content'>
+        <div class='modal-header'>
+        <h2>Crear</h2>
+        <span class='close'>x</span>
+        </div>
+        <div class='modal-body'>
+        <form id='paymentForm'>
+        <div class='form-group'>
+        <label class='form-label' for='date'>Fecha:</label>
+        <input class='form-control' id='date' name='date' type='datetime-local'/>
+        </div>
+        <div class='form-group'>
+        <label class='form-label' for='amount'>Monto a pagar *:</label>
+        <input class='form-control' id='amount' name='amount' step='0.01' type='number'/>
+        </div>
+        <div class='form-group'>
+        <label class='form-label' for='paymentOption'>Opción de pago *:</label>
+        <select class='form-control' id='paymentOption' name='paymentOption'>
+        <option value=''>Elija la opción de pago</option>
+        <option value='cash'>Dinero</option>
+        <option value='creditCard'>Tarjeta de crédito</option>
+        <option value='transfer'>Transferencia</option>
+        </select>
+        </div>
+        <div class='form-group'>
+        <label class='form-label' for='account'>Cuenta:</label>
+        <select class='form-control' id='account' name='account'>
+        <option value=''>Elija cuenta</option>
+        <option value='globalAccount'>Cuenta Global</option>
+        <!-- Add more account options here -->
+        </select>
+        </div>
+        <div class='form-group full-width'>
+        <label class='form-label' for='details'>Por favor proporcione cualquier detalle:</label>
+        <textarea class='form-control' id='details' name='details'></textarea>
+        </div>
+        <div class='form-group full-width'>
+        <input class='submit-button' type='submit' value='Entregar'/>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+
+    <footer>
+    </footer>
+        <script src="js/funciones.js"></script>
+        <script src="js/print.js"></script>
+        <script src="js/ux.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+</body>
+</html>
