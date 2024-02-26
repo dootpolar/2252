@@ -21,39 +21,49 @@ document.onpointerdown = function(t) {
 
 
 
-        //<![CDATA[
-          function darkmode_head() {
-                    if (localStorage.getItem("darkmode") == 1) {
-                        document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
-                    }
-           setTimeout(function(){
-                        var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
-                        document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
-                        document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
-                        document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
-           }, 1);
-                }
-          darkmode_head();
-          //]]>
-   
-// Dark Mode
-function darkmode() {
-  if (localStorage.getItem("darkmode") == 1) {
-      $('.darkmode-button').toggleClass('');
+      // Cambia el tema de la página a oscuro o claro según la preferencia guardada
+function darkmode_head() {
+  if (localStorage.getItem("darkmode") == "1") {
+      document.documentElement.classList.add("darkmode");
+  } else {
+      document.documentElement.classList.remove("darkmode");
   }
-  $('.darkmode-button').on('click', function(e) {
+
+  setTimeout(function() {
+      var themeColor = getComputedStyle(document.documentElement).getPropertyValue('--color-theme');
+      document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', themeColor);
+      document.querySelector('[name="msapplication-navbutton-color"]').setAttribute('content', themeColor);
+      document.querySelector('[name="theme-color"]').setAttribute('content', themeColor);
+  }, 1);
+}
+
+// Activa o desactiva el modo oscuro y guarda la preferencia del usuario
+function darkmode() {
+  var darkModeToggle = document.querySelector('.darkmode-button');
+
+  if (localStorage.getItem("darkmode") == "1") {
+      document.documentElement.classList.add("darkmode");
+  }
+
+  darkModeToggle.addEventListener('click', function(e) {
       e.preventDefault();
-      $("html").toggleClass("darkmode");
-      $('.darkmode-button').toggleClass('');
-      if (localStorage.getItem("darkmode") == 1) {
-          localStorage.setItem("darkmode", 0);
+      document.documentElement.classList.toggle("darkmode");
+      
+      if (localStorage.getItem("darkmode") == "1") {
+          localStorage.setItem("darkmode", "0");
       } else {
-          localStorage.setItem("darkmode", 1);
+          localStorage.setItem("darkmode", "1");
       }
+      
       darkmode_head();
   });
-};
-darkmode();
+}
+
+// Asegura que el código se ejecuta después de que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+  darkmode_head(); // Aplica el tema según la configuración almacenada al cargar la página
+  darkmode(); // Activa la funcionalidad del botón del modo oscuro
+});
 
 
 
