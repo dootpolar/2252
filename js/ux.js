@@ -21,14 +21,16 @@ document.onpointerdown = function(t) {
 
 
 
-      // Cambia el tema de la página a oscuro o claro según la preferencia guardada
-function darkmode_head() {
-  if (localStorage.getItem("darkmode") == "1") {
+// Inmediatamente intenta aplicar el modo oscuro basado en la configuración almacenada, si está disponible
+(function() {
+  if (localStorage.getItem("darkmode") === "1") {
       document.documentElement.classList.add("darkmode");
-  } else {
-      document.documentElement.classList.remove("darkmode");
+      updateThemeColor();
   }
+})();
 
+// Actualiza los colores del tema basados en la configuración del modo oscuro
+function updateThemeColor() {
   setTimeout(function() {
       var themeColor = getComputedStyle(document.documentElement).getPropertyValue('--color-theme');
       document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', themeColor);
@@ -37,31 +39,23 @@ function darkmode_head() {
   }, 1);
 }
 
-// Activa o desactiva el modo oscuro y guarda la preferencia del usuario
+// Función para manejar el clic en el botón de modo oscuro
 function darkmode() {
   var darkModeToggle = document.querySelector('.darkmode-button');
-
-  if (localStorage.getItem("darkmode") == "1") {
-      document.documentElement.classList.add("darkmode");
-  }
 
   darkModeToggle.addEventListener('click', function(e) {
       e.preventDefault();
       document.documentElement.classList.toggle("darkmode");
       
-      if (localStorage.getItem("darkmode") == "1") {
-          localStorage.setItem("darkmode", "0");
-      } else {
-          localStorage.setItem("darkmode", "1");
-      }
+      var isDarkMode = document.documentElement.classList.contains("darkmode");
+      localStorage.setItem("darkmode", isDarkMode ? "1" : "0");
       
-      darkmode_head();
+      updateThemeColor();
   });
 }
 
 // Asegura que el código se ejecuta después de que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
-  darkmode_head(); // Aplica el tema según la configuración almacenada al cargar la página
   darkmode(); // Activa la funcionalidad del botón del modo oscuro
 });
 
