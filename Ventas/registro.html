@@ -1,1091 +1,1043 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8"><meta content='yes' name='apple-mobile-web-app-capable'/><meta content='#ffffff' name='theme-color'/><meta content='#ffffff' name='msapplication-navbutton-color'/><meta content='#ffffff' name='apple-mobile-web-app-status-bar-style'/><meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../css/styles.css">
-<link rel="stylesheet" href="../css/ux.css">
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<title>Ordenes</title>
-<script>
- //<![CDATA[
- function darkmode_head() {
-                    if (localStorage.getItem("darkmode") == 1) {
-                        document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
-                    }
-           setTimeout(function(){
-                        var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
-                        document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
-                        document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
-                        document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
-           }, 1);
-                }
-          darkmode_head();
-          //]]>
-   
-// Dark Mode
-function darkmode() {
-  if (localStorage.getItem("darkmode") == 1) {
-      $('.darkmode-button').toggleClass('');
-  }
-  $('.darkmode-button').on('click', function(e) {
-      e.preventDefault();
-      $("html").toggleClass("darkmode");
-      $('.darkmode-button').toggleClass('');
-      if (localStorage.getItem("darkmode") == 1) {
-          localStorage.setItem("darkmode", 0);
-      } else {
-          localStorage.setItem("darkmode", 1);
-      }
-      darkmode_head();
-  });
-};
-darkmode();
-  </script>
-</head>
-<body>
-
-<div class="header">
-<div class="header-container">
-    <button class='js-ripple menu-toggle'>
-        <svg viewBox="0 0 24 24">
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
-        </svg>
-      </button>
-<div class="logo">Sistema 1.1</div>
-<div class="admin-container">
-<div class="usuario">
-<div class='dropdown'>
-            <button class='dropbtn js-ripple' data-dropdown='usuario' onclick='toggleDropdown(event)'>
-            <img class="rounded-circle" src="data:image/png;base64,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" style="width: 21px;">
-            <span class="">Admin</span></button>
-            <div class='dropdown-content' id='usuario'>
-                <a href=./orden.html>Editar Perfil</a>
-                <a href='#eliminarFila'>Cerrar Sesion</a>
+   <head>
+      <meta charset="UTF-8">
+      <meta content='yes' name='apple-mobile-web-app-capable'/>
+      <meta content='#ffffff' name='theme-color'/>
+      <meta content='#ffffff' name='msapplication-navbutton-color'/>
+      <meta content='#ffffff' name='apple-mobile-web-app-status-bar-style'/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="../css/styles.css">
+      <link rel="stylesheet" href="../css/ux.css">
+      <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+      <title>Ordenes</title>
+      <script>
+         //<![CDATA[
+         function darkmode_head() {
+                            if (localStorage.getItem("darkmode") == 1) {
+                                document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
+                            }
+                   setTimeout(function(){
+                                var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
+                                document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
+                                document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
+                                document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
+                   }, 1);
+                        }
+                  darkmode_head();
+                  //]]>
+           
+         // Dark Mode
+         function darkmode() {
+          if (localStorage.getItem("darkmode") == 1) {
+              $('.darkmode-button').toggleClass('');
+          }
+          $('.darkmode-button').on('click', function(e) {
+              e.preventDefault();
+              $("html").toggleClass("darkmode");
+              $('.darkmode-button').toggleClass('');
+              if (localStorage.getItem("darkmode") == 1) {
+                  localStorage.setItem("darkmode", 0);
+              } else {
+                  localStorage.setItem("darkmode", 1);
+              }
+              darkmode_head();
+          });
+         };
+         darkmode();
+          
+      </script>
+   </head>
+   <body>
+      <div class="header">
+         <div class="header-container">
+            <button class='js-ripple menu-toggle'>
+               <svg viewBox="0 0 24 24">
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+               </svg>
+            </button>
+            <div class="logo">Sistema 1.1</div>
+            <div class="admin-container">
+               <div class="usuario">
+                  <div class='dropdown'>
+                     <button class='dropbtn js-ripple' data-dropdown='usuario' onclick='toggleDropdown(event)'>
+                     <img class="rounded-circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAABJFSURBVHgB7Vt7cFz1df7u3Xv3rZV2Ja0tS5ZsS5aNbQzYGBIgmIBTXmkhSZOQhASSacpQ+legnbbpdPpgOlM67T+ddjplmknahJm2aWjTJLQFCgWS8DA25mEbGfyQrbd2te/H3bv39jtnJTd/tJloJduZsX/mAt69q/2d8zvnO9/5zpXx4PO+j4t4mbjI1yUH4Odk+U0XTj6D870sXOAlhpdf+gZiR56CVc1hNpBC5PbfQMfmPTgf64JGQHX6BKrf/UP0HP42Os06YpEg6icP4tSffRzTL/0DfOKzf44x+pxHgNdsoHriEIzMaQRGrkGoux/17BRqP34Cxhv/jGRHBAgE4BkG73UBA+juTCD+4l/Ae/0bQDQJp3crzBvuR6hnPVZ7GeeqDNbGfoTKwe/BOfI8mrUi6vUqOtYOobSQge9U0dfbi6bnIGgHeVmIhcKQjZSrFdh8zQpY8PhKo+GiUqujaobohF9B13WfwWquVY+A+vw4Gsxp943vML99WGIVEy0ei8CuF1DNz8FtNDHleejpTqFUKiMcCSMYDMI0TJimCY9nUnPqyBeLmJvLolAuMUgMpOYehd9wkNx7X+u7Zk8iEI7CSqTR7lpVBxRe+hb8l76GeikD13WQSCQQ4QaDYZ4yw9yngYGAjVOnTiGfz6mxhEFGgg+DKRCPxdGg05gLKNHoTDaLSCwGj8aXSiVMz82g+8lHYZ85CLN3GOFj/4Hy8E3ouO0RtLtWzQGz//lXCL7ydZRLRYTDERodR6VSw/x8Fo7boIE+elJp9Pb2IMITn5ubQ4FGNRyHLvDheg1oMvJfEvqlYgnRcBgucUGMl9ddv4kzs1MovPCPSHd3wzUsJG66BitZq+KAysxJOM8/zlAOoqOjkwZGGP4ewlZI87rO064yjycmzsCyAuhIxNHV1cn/t7GwsIBypcoo8BAwg4wQk3nfQMNt8vUapmdn0Gw2eX8XOmMd+l61VMV7zSq2/frfoGv7jVjJWhUHNIoZnlgORjMKgfFKpaKG2EEbIea2OMR1XVSrDk5PTGC9MQCJftsyEItHUF9w1AGlapmfCxAwCXrVKq8atmzZgnRPL4HShmEaUiQgaVMqFVCZegv+FR/W9LmgDigffgGWaSFXKKHOkK7VaujiKSc6Enri8l6IyC4OqDESisU8wzvKk6UpnqFO8ogDTZ66U3dQZBrJZ7eMbIZlB+gshn/TITbQAZIn/MeyuPX938LE3Bn0f/5P6IT2KM2KHVBbmMbcs48zD6rMUZclzEbCjiPD0K7SEalUCiGGeoCvy3t1gqOUNTHc9z3UGdKC+or+HrQqmDzndHcPHL4nzlQypEDZwgc5bzG4wQ84h76L2Y27seZD96CdtWIHTP7X36OyMMf8hZ6+71cQj8eRogGFQh4LuTy6OjtbX8aUqNSqcBwSHr+qJ+ny1CW0pTpI6Ev6rFu3FmXe1yw3GSWuFAUaLSfvqQPEIS7DZ9EVKH3799G956OwCLzn3QE1hmCtXmM+Wyx5YXVCPp9nCHcw96PIFwqav0Eab0op1M031BgxIkDjbYKlpHGVJCgUtskBHD193sKySCcQPyQ8DJbDpn7OU5D1JGQgziuhcGw/UpffhOWuFTvA5cYrDFspbbLjSDTKPJY8l3IYZmgbyLEKxFjPrWBIN+2S3TlMF5dGiqMExOT05bQDTJcKAdBfxAQBR00Rfk+DjnBZUj1yBZ9/D5gBXsItyBYnjl4YB8TSQ4hGI3qqDg/WYM6GifpSu5uVMjdqaJg7fFPYnkuDiuWKOiLK+wwaUSlXGfp0IitCg/cJf/AY91I5zhL1n2yMfDl3Q/8uDhIHzj/zOAZufQBYZkVYsQNCzP2BgXVaq3O5HDdf5Sla6IyGsH10BJcNb0InGWGxWFZgPD0zjbH3x1FhmBvcfI69gYS8AKScrtNw1XCJBgFJ4h6NbFktWCFp0cp8Q9PCZwSoE8rzyI+9is4t1y5r/yt2QP6Np+iEAOJsZkI0IjOfQTIWxsNfvhfD6wcQtkOwQ6GzVaBJtHQd1nye8nvvH8d7J0+htsj2qnSeyfelVNYZSbVqXbtJiYjx6RlM0oFMBuUY4owWlYYySU9So5LHcteKHOA16iifPopgLKgGCsht7l+LB+65C72kqrpRSy7ZrMX3ba3rJIzsE6JE+17svf5anC3hWu1aGNFwamiQE9SYGlPTU5iYnMIrbx3Gv//oAPLkE5axRIpa0SCgGUj1YblrxRHQJBoJOCkec1O33LBLSZBNwwnaSoIsgyzONrUrNA1D2Z5aLRYEWiao9fJ/vslWmNVCmR+7Q7bFg4ygdDqNkU2bsGvHNvzlE0/izPyCVgVj8Xv9rn4kBndguWtFipDJ8A5u3KW0VfI3TpAbHRxUtqYgBekAA606L8YolTWUxPxfWCWvGS2LNLzlWqK5Jn9OMBTElk1DeOBTd2JtqlsZ5NKHElfcvmwAXLEDZCXWDmpHVy6XsXPrKGyGfZPUtQlvcW8EqsDS18hx+wpuiugSxnqp+Yr48nrrc8aiU+g8fzFCpFMk4K3v68OmdWmsYWeZkKaKjhjcdx/aWStPgVIOyVQSKdbzdem4GmF4Zou3yw3yAsugp4DVKmum36KywvH9nzw0wQCp+yyBcvktj6Bp+FhKeOEHPt8bGOjB/FgVXbEoU5CdZ3oQ7awVO8AnixPEppqBzo4YWpgMrf8lgtXcVIa0tt4SPHjP0Pr16OJ9pukp9//fIFys84tAKM2RKEcuabM4RYkR66FcAjjdXSk65bTeJ5Kazx4DoSiWu1bsAM8Ma7myGOZBApYYWmA5e/qVgzgxPokGj1hSQGs1/0S52S/fczcG+9edNXypssuqEfmfe/kVjJ2kxlBrEExt9PX0YHR4CD3RIKkxeQIjoJtVRCLBoZM8gnBtfgJ2rAvLXSuPACEn/NPDsuc1Rcqq4cCRMXSvXYcdW7ciGY8qABbY4k7MzaJadlje6iixRwiwVW4BotEKdZ7uyfFxvPjya+qWZGdS6/7YyXEcfPttjG4YwJ4dWzVSAob0BS3tsMafB/MCtcOBIPk+t7llqI8nIvQ2hDtv/pAqu6xT6hyDIZ0gXV7bk0Kz0dDDLlETEBQX7iAviPHSA4h2+Nk79/G9cIvsCEjSuIV8Aa8fOowDb76NHVtGFE5d0mYx3mGURUnJL4gDOoa2IUAdP81mh5VfT1XKlwgWlkUD9ZQN7eikH2igpQPIEt5vmK6edpNAJnMBm0QpaEfVMaISixMEA9LJLvzC3muRzWSJDSRCZJ/CkaVR6rvxXgTayP8VOWBkYT96zDK+yS4sKlEgqB4QmkrGx81ZJDKiAolxAmriFJW1KGxK47QkashSCqSkxtKICZJfSCcpzpTlqvMc5RsdRP1MpqrOCtJZEjnp6z6BdldbDrAm38KVM9/BMBud6cgpvKq1vNWsWNKc0OAfH3oL45MzWMjmsL5/PfbsHCVwJZQBWsoLDHWaVAstjQYds+iUEI23bKuFD/LHNtVhwje0uC4KKTG23oZdRnK0fWW4LQcMVY5henICWYLaJ2+7FccOH9NcFaZXpxVPv/wWbv/cF3Dgbx/HXQ98Bfs+cgeu3LQWv/bpO7B7x+XK48VAOWmRkkTccMj9F0VCnSKNT2Tx5tExVOsNDPStw66dl2mE+VhqibXYIrHxCsWhdldb0BkLetiwYVCIO46fGFMQlBAXodNif/yxez6laP/fzzyHT3/2ftS42elcBa8dPoEzk5PUAR2VxEU8kcsmGMrJenSEcIZv/utTyHYN4s//6Vl8/fsv4IeHj+K5d8/g5PS8ppPaz52XKZ9dN9KPB+e/hs3j30c7qy0HGHYEndT50r1pHD9+gohta1kKh0NkhAlECxmk7CaG+pIo5TJkfga2sUpcf8vtqEQ6FMREMwgRuKLROP8b1sogBr05PoVjvL7yyFdxfHoOYyRSFU6JfulzX8LJmQzBcikCTHTw++798BWYO/0uuo78m47al7vaSoHj1Tj2Rm1FbIGpVHdSQUwAUEqWxcjo8ir46z/9Y871ypify1EYTaAj2Usll/OBKTqNHZ4puS1NoehddFKNxt32+Qfx2qGDcN45plG1lp3l0PohBNwK9u29HvnJcWoHVITZfA2sW4NZaZVPn0aSh9GsV2BFE8uypS0H5Hq3wXTeVo1PkH3tmnSrc1ORYlGnYz5L+UsxxNcMdy0ONWTa6yGU7D5LfiT/hdjYjIKR4Y2IzY7hdx56EPfdPYtxjs+G0r1IUCrzxo/AqpdVY5C1JLPNUigZGR5BxYojEDlPqrAZ60Ymz5E2Q196d0E+QWkVMhjeAmi2EBltiFtKsIy7pbZ7HHAIY5T2WS4hS5L74hBRlFj9NY2So3FsHxlSqU0uUXyg4qi5WAUaLL9BdJMfpBhdZ4z+toYjbTlAwvx9P41rI3WdAWSY85KZMsiU2Z1o+2FpUoTpyVdQEWoa1PnI3evk+lWqPDL9FaVYjKrzJG2qRbY4KOKqKCJO0o5Qep9mc1EjbLXD0gtIxRnuX6NqtEhuJ8PLF0Nkta0HHA5tUmM7OuJqWGtzLSVX5eymqycnHZ0OO1nDhbqKFD7L8imKcA+HJ8lkSgWUbDajn5fRmN4rn3d9/ax0mzIzkClRnVVCfoZEWie/O0ZiVKQ2PxXegHZW2w7IJrfi2XEHE2UOKuteqytjKEtoikPECa1JTxlFNj5lET0JiDItmp6a0i5PUkK0xCDzf3KK5ZEDFpcOcDgUdWuO9g2uDEmc1kxRnSPiJ6NAnNRJDUKmxgfNDfCjSbSz2qbCIocd+eBvMzfr6Jz7PWr90+jkOEv0viDBUU7QaEq76qhuGAm12J1ESi5XwP4DB7GWBEfSaYZSebFQZFqU2e4u1vlFoiPDD39xmCLRoEMVYYTEjO50Dyp0/jvd7T9RtuJmyKQgUukeRu7MMXSVYqzvQQRlQoIWUs9nszrtkXwXWVx0/FGywaPvHsXxV19V8IxGY9i2/TJKaYbOCOR0xdhQyEaUjltSiTQd6NAiHRUkXZaHSZ6pr4fb0Y9216qMx52BXSgf/x7msnmNDJMkp1K3SWzKnA0WNcR95fi+tsnxeAJX77mGw5KCDkJisbgOQKoyEGXk1Nj0VJgyceZ3gNNlQVhJJ8EAmR4XOCc4etVDOEKg9Ub3of2nA1bJAUbfNmR9sjrmrsXwrjFPRaiUMO2gXrh//yGUmb8Cej5TJsLy2SEgSFkrRP1gmi2udncyQJVRWaOmo/VisUJnBrV5cil8lFhdZnjvZLAXge23ntWSVrJWxQEmKW358l9G5Y2/Q1CcINSYG5cZYTrVi6t27sQXv/oYUqzZW0Y3Y9PGDeiLJTGd92BRN2zSOVmmyiT7hJlZUY2K+K0vfgYO2+ZsXqY9vqpI2YUsI6qC4sgtq/aE56o9JOVtvwML7zzJGV2RDrAUCC0VQ4DLNm/C3Td/ED947oc4eOA1vPH6fsikvyFzPg5OAtoINfWZQBE57/3YrRjdOoITlMKK/HnyqIykU6nCqXOwE96VH//5c4BEQe72R2E++RDCxRLCzHspa1LDS2QzX/jFfYhwRpDNLMDl3wssjUV5+sNr6QIeQWB8roAbdu/Er37yDjZAFVWTRDmWBypKxSqKpRpm99wPK9GL1Vqr+pyg1bMRs9c9DO+Fx3TzgvpBeTyGDQ25ID7KKBh7d0xV5M5IVHlD3fUU1U+T99/ygd24/gNXUxuskO35Z4FPwFIelpwc3AvrqruwmmvVnxQNb78FC8EIgi8+xkYpR7IjI21SXZY/qeGjIyPaNTZJnJoqftR0+nvV1VfwtCl5Uwyp1ix9jmhhIa8j9zniwFTfjTA/8nBb46+fts7Jw9L25uswHfoDeE//rhopTVGYcz1ZC7kFFTSl9EXJ4w1BeK+VEqIRRCIWMtkFDlVqBL0cR+IFzO9+APauu9t+EuynLeNc/s6QN3scnc/+ETZGG9q1yYPRTYqi1XIV5WpZHvxiO9zSA2RqFAoFtazlKYHP54uY9BKo3vwIrP72Gp2fZRnn+pemmrUywv/ym9gazqsoos8E6gywubQF5Qsib0v/IF3iVKaAqa2fgHH1PTCsc/tEv3E+fmtMSI51+AdIvfkE+uJBVY5Ns4X+rX6s9eRYJlfEma7tqF/7JdjpjTgfyzifvzbnltgXzByGOXcCZnEatlNis8NGh0ygmdwId3A3fLLKc5Hr/98yLv3e4EW+LjkAF/m65ABc5OuSA3CRr/8Bn7pdtlx+VWsAAAAASUVORK5CYII=" style="width: 21px;">
+                     <span class="">Admin</span></button>
+                     <div class='dropdown-content' id='usuario'>
+                        <a href=./orden.html>Editar Perfil</a>
+                        <a href='#eliminarFila'>Cerrar Sesion</a>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-<div class="header2">
-            <div class="header-container">
-                <ul>
-                    <li><a href="./tablero.html"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"><path opacity=".4" d="m20.04 6.822-5.76-4.03c-1.57-1.1-3.98-1.04-5.49.13l-5.01 3.91c-1 .78-1.79 2.38-1.79 3.64v6.9c0 2.55 2.07 4.63 4.62 4.63h10.78c2.55 0 4.62-2.07 4.62-4.62v-6.78c0-1.35-.87-3.01-1.97-3.78Z" fill="#5B6B79"></path><path d="M16.83 11.27a.707.707 0 0 0-.38-.38.646.646 0 0 0-.27-.05h-1.86c-.39 0-.7.31-.7.7 0 .39.31.7.7.7h.18l-2.11 2.11-1.02-1.52a.712.712 0 0 0-.51-.31.676.676 0 0 0-.56.2L7.32 15.7c-.27.27-.27.71 0 .99.14.14.31.2.49.2s.36-.07.49-.2l2.38-2.38 1.02 1.52c.12.17.3.29.51.31.22.02.41-.05.56-.2l2.72-2.72v.18c0 .39.31.7.7.7.39 0 .7-.31.7-.7v-1.86a.764.764 0 0 0-.06-.27Z" fill="#5B6B79"></path></svg> Dashboard</a></li>
-                    <li class="js-ripple">
-                        <a><svg class="pc-icon">
+         </div>
+      </div>
+      <div class="header2">
+         <div class="header-container">
+            <ul>
+               <li>
+                  <a href="./tablero.html">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path opacity=".4" d="m20.04 6.822-5.76-4.03c-1.57-1.1-3.98-1.04-5.49.13l-5.01 3.91c-1 .78-1.79 2.38-1.79 3.64v6.9c0 2.55 2.07 4.63 4.62 4.63h10.78c2.55 0 4.62-2.07 4.62-4.62v-6.78c0-1.35-.87-3.01-1.97-3.78Z" fill="#5B6B79"></path>
+                        <path d="M16.83 11.27a.707.707 0 0 0-.38-.38.646.646 0 0 0-.27-.05h-1.86c-.39 0-.7.31-.7.7 0 .39.31.7.7.7h.18l-2.11 2.11-1.02-1.52a.712.712 0 0 0-.51-.31.676.676 0 0 0-.56.2L7.32 15.7c-.27.27-.27.71 0 .99.14.14.31.2.49.2s.36-.07.49-.2l2.38-2.38 1.02 1.52c.12.17.3.29.51.31.22.02.41-.05.56-.2l2.72-2.72v.18c0 .39.31.7.7.7.39 0 .7-.31.7-.7v-1.86a.764.764 0 0 0-.06-.27Z" fill="#5B6B79"></path>
+                     </svg>
+                     Dashboard
+                  </a>
+               </li>
+               <li class="js-ripple">
+                  <a>
+                     <svg class="pc-icon">
                         <use xlink:href="#custom-productos"></use>
-                      </svg> Productos</a>
-                    
-                        <ul class="submenu">
-                            <li class="js-ripple"><a href="#">Crear Producto</a></li>
-                            <li class="js-ripple"><a href="#">Inventario</a></li>
-                            <li class="js-ripple"><a href="#">Lista de Productos</a></li>
-                          </ul>
-                    
-                    
-                    
-                    </li>
-    
-                    <li class="menu-item">
-                      <a><svg class="pc-icon">
+                     </svg>
+                     Productos
+                  </a>
+                  <ul class="submenu">
+                     <li class="js-ripple"><a href="#">Crear Producto</a></li>
+                     <li class="js-ripple"><a href="#">Inventario</a></li>
+                     <li class="js-ripple"><a href="#">Lista de Productos</a></li>
+                  </ul>
+               </li>
+               <li class="menu-item">
+                  <a>
+                     <svg class="pc-icon">
                         <use xlink:href="#custom-control"></use>
-                      </svg> Control de Ventas</a>
-                      <ul class="submenu">
-                        <li><a href="#">Crear Venta</a></li>
-                        <li><a href="#">Registro de Ventas</a></li>
-                        <li><a href="#">Detalle de Venta</a></li>
-                        <li><a href="#">Guia de Remision</a></li>
-                        <li><a href="#">Comprobantes</a></li>
-                        <li><a href="#">Cotizaciones</a></li>
-                        <li><a href="#">Clientes</a></li>
-    
-                      </ul>
-                    </li>
-                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M16.42 7.951a6.253 6.253 0 0 1 0 8.84 6.253 6.253 0 0 1-8.84 0 6.253 6.253 0 0 1 0-8.84 6.253 6.253 0 0 1 8.84 0Z" fill="#5B6B79"></path><path opacity=".4" d="M8.25 22.389c-.09 0-.19-.02-.28-.05-2.25-.9-4.07-2.49-5.29-4.59a10.6 10.6 0 0 1-1.341-6.73c.05-.41.44-.7.84-.65.41.05.7.43.65.84-.26 2.02.14 4.02 1.15 5.78a9.104 9.104 0 0 0 4.54 3.94c.38.16.57.59.42.98-.11.3-.4.48-.69.48ZM5.85 5.23c-.22 0-.44-.1-.59-.29-.26-.33-.2-.8.13-1.05C7.3 2.4 9.58 1.61 12 1.61c2.36 0 4.61.76 6.5 2.2A.749.749 0 1 1 17.59 5 9.111 9.111 0 0 0 12 3.11c-2.08 0-4.05.68-5.69 1.96-.14.11-.3.16-.46.16ZM15.75 22.39c-.3 0-.58-.18-.7-.47a.76.76 0 0 1 .42-.98c1.93-.78 3.5-2.14 4.54-3.94a9.044 9.044 0 0 0 1.15-5.78c-.05-.41.24-.79.65-.84.4-.05.79.24.84.65.3 2.35-.16 4.68-1.34 6.73-1.21 2.1-3.04 3.68-5.29 4.59-.08.02-.17.04-.27.04Z" fill="#5B6B79"></path></svg> Control de Compras</a>
-                        <ul class="submenu">
-                        <li><a href="#">Crear Compra</a></li>
-                        <li><a href="#">Registro de Compra</a></li>
-                        <li><a href="#">Detalle de Compras</a></li>
-                        <li><a href="#">Proveedores</a></li>
-    
-                      </ul>
-                    </li>
-                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"><path opacity=".4" d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81v8.37C2 19.83 4.17 22 7.81 22h8.37c3.64 0 5.81-2.17 5.81-5.81V7.81C22 4.17 19.83 2 16.19 2Z" fill="currentColor"></path><path opacity=".97" d="M12 10.311a1.31 1.31 0 1 0 0-2.62 1.31 1.31 0 0 0 0 2.62ZM8.31 13.691c-.72 0-1.31.59-1.31 1.31 0 .72.59 1.31 1.31 1.31.72 0 1.31-.59 1.31-1.31 0-.72-.59-1.31-1.31-1.31ZM15.69 13.691c-.72 0-1.31.59-1.31 1.31 0 .72.59 1.31 1.31 1.31.72 0 1.31-.59 1.31-1.31 0-.72-.59-1.31-1.31-1.31Z" fill="currentColor"></path></svg> Configuracion</a>
-                 
-                        <ul class="submenu">
-                        <li><a href="#">Usuarios</a></li>
-                        <li><a href="#">Categorias</a></li>
-                        <li><a href="#">Integracion</a></li>
-    
-                      </ul>
-                    </li>
-                </ul>
-                    
-            
-                    <div class="admin-container">
-                        <button aria-label='Dark Mode' class='darkmode-button darkmode-button-icon js-ripple' type='button'>
-                          <svg height='472.39' viewBox='0 0 472.39 472.39' width='472.39' xmlns='http://www.w3.org/2000/svg'>
-                              <g class='toggle-sun'>
-                                  <path d='M403.21,167V69.18H305.38L236.2,0,167,69.18H69.18V167L0,236.2l69.18,69.18v97.83H167l69.18,69.18,69.18-69.18h97.83V305.38l
-                                  69.18-69.18Zm-167,198.17a129,129,0,1,1,129-129A129,129,0,0,1,236.2,365.19Z'>
-                                  </path></g><g class='toggle-circle'><circle class='cls-1' cx='236.2' cy='236.2' r='103.78'></circle></g></svg></button>
-                  
-                        
-                      </div>
-                </div>
-</div>
-
-
-      
-
-<main class='main-container'>
-<div class='container'>
-
-
-<div class="breadcrumbs">
-  <a href="#">Dashboard</a> <span>&gt;</span> <a href="#">Registro de Ventas</a>
-</div>
-<div class="page-title">
-  Registro de Ventas
-</div>
-
+                     </svg>
+                     Control de Ventas
+                  </a>
+                  <ul class="submenu">
+                     <li><a href="#">Crear Venta</a></li>
+                     <li><a href="#">Registro de Ventas</a></li>
+                     <li><a href="#">Detalle de Venta</a></li>
+                     <li><a href="#">Guia de Remision</a></li>
+                     <li><a href="#">Comprobantes</a></li>
+                     <li><a href="#">Cotizaciones</a></li>
+                     <li><a href="#">Clientes</a></li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="#">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path d="M16.42 7.951a6.253 6.253 0 0 1 0 8.84 6.253 6.253 0 0 1-8.84 0 6.253 6.253 0 0 1 0-8.84 6.253 6.253 0 0 1 8.84 0Z" fill="#5B6B79"></path>
+                        <path opacity=".4" d="M8.25 22.389c-.09 0-.19-.02-.28-.05-2.25-.9-4.07-2.49-5.29-4.59a10.6 10.6 0 0 1-1.341-6.73c.05-.41.44-.7.84-.65.41.05.7.43.65.84-.26 2.02.14 4.02 1.15 5.78a9.104 9.104 0 0 0 4.54 3.94c.38.16.57.59.42.98-.11.3-.4.48-.69.48ZM5.85 5.23c-.22 0-.44-.1-.59-.29-.26-.33-.2-.8.13-1.05C7.3 2.4 9.58 1.61 12 1.61c2.36 0 4.61.76 6.5 2.2A.749.749 0 1 1 17.59 5 9.111 9.111 0 0 0 12 3.11c-2.08 0-4.05.68-5.69 1.96-.14.11-.3.16-.46.16ZM15.75 22.39c-.3 0-.58-.18-.7-.47a.76.76 0 0 1 .42-.98c1.93-.78 3.5-2.14 4.54-3.94a9.044 9.044 0 0 0 1.15-5.78c-.05-.41.24-.79.65-.84.4-.05.79.24.84.65.3 2.35-.16 4.68-1.34 6.73-1.21 2.1-3.04 3.68-5.29 4.59-.08.02-.17.04-.27.04Z" fill="#5B6B79"></path>
+                     </svg>
+                     Control de Compras
+                  </a>
+                  <ul class="submenu">
+                     <li><a href="#">Crear Compra</a></li>
+                     <li><a href="#">Registro de Compra</a></li>
+                     <li><a href="#">Detalle de Compras</a></li>
+                     <li><a href="#">Proveedores</a></li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="#">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path opacity=".4" d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81v8.37C2 19.83 4.17 22 7.81 22h8.37c3.64 0 5.81-2.17 5.81-5.81V7.81C22 4.17 19.83 2 16.19 2Z" fill="currentColor"></path>
+                        <path opacity=".97" d="M12 10.311a1.31 1.31 0 1 0 0-2.62 1.31 1.31 0 0 0 0 2.62ZM8.31 13.691c-.72 0-1.31.59-1.31 1.31 0 .72.59 1.31 1.31 1.31.72 0 1.31-.59 1.31-1.31 0-.72-.59-1.31-1.31-1.31ZM15.69 13.691c-.72 0-1.31.59-1.31 1.31 0 .72.59 1.31 1.31 1.31.72 0 1.31-.59 1.31-1.31 0-.72-.59-1.31-1.31-1.31Z" fill="currentColor"></path>
+                     </svg>
+                     Configuracion
+                  </a>
+                  <ul class="submenu">
+                     <li><a href="#">Usuarios</a></li>
+                     <li><a href="#">Categorias</a></li>
+                     <li><a href="#">Integracion</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <div class="admin-container">
+               <button aria-label='Dark Mode' class='darkmode-button darkmode-button-icon js-ripple' type='button'>
+                  <svg height='472.39' viewBox='0 0 472.39 472.39' width='472.39' xmlns='http://www.w3.org/2000/svg'>
+                     <g class='toggle-sun'>
+                        <path d='M403.21,167V69.18H305.38L236.2,0,167,69.18H69.18V167L0,236.2l69.18,69.18v97.83H167l69.18,69.18,69.18-69.18h97.83V305.38l
+                           69.18-69.18Zm-167,198.17a129,129,0,1,1,129-129A129,129,0,0,1,236.2,365.19Z'>
+                        </path>
+                     </g>
+                     <g class='toggle-circle'>
+                        <circle class='cls-1' cx='236.2' cy='236.2' r='103.78'></circle>
+                     </g>
+                  </svg>
+               </button>
+            </div>
+         </div>
+      </div>
+      <main class='main-container'>
+         <div class='container'>
+            <div class="breadcrumbs">
+               <a href="#">Dashboard</a> <span>&gt;</span> <a href="#">Registro de Ventas</a>
+            </div>
+            <div class="page-title">
+               Registro de Ventas
+            </div>
             <div class="card-container">
-                <div class="card">
+               <div class="card">
                   <div class="card-header">Cantidad de Ventas</div>
                   <div class="card-value totalfilas">0</div>
-                </div>
-                <div class="card">
+               </div>
+               <div class="card">
                   <div class="card-header">Monto Total Ventas</div>
                   <div class="card-value totalMonto">S/0.00</div>
-                </div>
-                <div class="card">
+               </div>
+               <div class="card">
                   <div class="card-header">Monto Total Cobrado</div>
                   <div class="card-value Pagado">S/0.00</div>
-                </div>
-                <div class="card">
+               </div>
+               <div class="card">
                   <div class="card-header">Monto Total Pendiente</div>
                   <div class="card-value totalPendiente">S/0.00</div>
-                </div>
-              </div>
-
-
-              <div class="sales card">
-        
-        <div class="tble-op">
-
-        <div class="op-fnd ">
-        <input class="fnd-inp" placeholder='Buscar en toda la tabla...' type='text'/>
-        <div class=" js-ripple"><a href="./orden.html" class='btn js-ripple'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 28 26" fill="none"><path d="M6 12h12M12 18V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>Crear</a></div> 
-        </div>
-        <div class="buttons-container">
-
-
-
-        
-
-<div class="dropdown">
-    <button class="dropbtn js-ripple" data-dropdown="exportar" onclick="toggleDropdown(event)"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 28 26" fill="none">
-        <path d="M9 11v6l2-2M9 17l-2-2" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M22 10v5c0 5-2 7-7 7H9c-5 0-7-2-7-7V9c0-5 2-7 7-7h5" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M22 10h-4c-3 0-4-1-4-4V2l8 8Z" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg> Exportar<span class="ripple"><span style="top: -75.4151px; left: -58.1026px; height: 186.799px; width: 186.799px; transform: scale(1); opacity: 0;"></span></span></button>
-    <div class="dropdown-content" id="exportar">
-        <a>Simple</a>
-        <a>Detallado</a>
-    </div>
-</div>
-
-          </div>
-    </div>
-        <table class=" sticky-header-table">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Referencia (Registro Key)</th>
-                    <th>Clientes (Clientes Randoms)</th>
-                    <th>Empresas (El Cliente tiene Varios)</th>
-                    
-                    <th>Monto (Total del Pedido) </th>
-                    <th>Pago (Registro de Pagos)</th>
-                    <th>Pendiente (Resta Automatico)</th>
-                    <th>Estado de Pago (Automatico)</th>
-                    <th>Comprobante (Automatico)</th>
-                    <th>Acción</th>
-                </tr>
-                <tr>
-                    <!-- Campos de búsqueda -->
-
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='fecha' onclick='toggleDropdown(event)'>Opciones</button>
-                            <div class='dropdown-content' id='fecha'>
-                              <label class="checkbox-container">Completado
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                              </label>
-                              <label class="checkbox-container">Pendiente
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                              </label>
-                              <label class="checkbox-container">Parcial
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                              </label>
-                              <label class="checkbox-container">Retorno
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                              </label>
-                            </div>
-                          </div>
-
+               </div>
+            </div>
+            <div class="sales card">
+               <div class="tble-op">
+                  <div class="op-fnd ">
+                     <input class="fnd-inp" placeholder='Buscar en toda la tabla...' type='text'/>
+                     <div class=" js-ripple">
+                        <a href="./orden.html" class='btn js-ripple'>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 28 26" fill="none">
+                              <path d="M6 12h12M12 18V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                           Crear
+                        </a>
+                     </div>
+                  </div>
+                  <div class="buttons-container">
+                     <div class="dropdown">
+                        <button class="dropbtn js-ripple" data-dropdown="exportar" onclick="toggleDropdown(event)">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 28 26" fill="none">
+                              <path d="M9 11v6l2-2M9 17l-2-2" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M22 10v5c0 5-2 7-7 7H9c-5 0-7-2-7-7V9c0-5 2-7 7-7h5" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M22 10h-4c-3 0-4-1-4-4V2l8 8Z" stroke="#5B6B79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                           Exportar<span class="ripple"><span style="top: -75.4151px; left: -58.1026px; height: 186.799px; width: 186.799px; transform: scale(1); opacity: 0;"></span></span>
+                        </button>
+                        <div class="dropdown-content" id="exportar">
+                           <a>Simple</a>
+                           <a>Detallado</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <table class=" sticky-header-table">
+                  <thead>
+                     <tr>
+                        <th>Fecha</th>
+                        <th>Referencia (Registro Key)</th>
+                        <th>Clientes (Clientes Randoms)</th>
+                        <th>Empresas (El Cliente tiene Varios)</th>
+                        <th>Monto (Total del Pedido) </th>
+                        <th>Pago (Registro de Pagos)</th>
+                        <th>Pendiente (Resta Automatico)</th>
+                        <th>Estado de Pago (Automatico)</th>
+                        <th>Comprobante (Automatico)</th>
+                        <th>Acción</th>
+                     </tr>
+                     <tr>
+                        <!-- Campos de búsqueda -->
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='fecha' onclick='toggleDropdown(event)'>Opciones</button>
+                              <div class='dropdown-content' id='fecha'>
+                                 <label class="checkbox-container">Completado
+                                 <input type="checkbox" checked="checked">
+                                 <span class="checkmark"></span>
+                                 </label>
+                                 <label class="checkbox-container">Pendiente
+                                 <input type="checkbox" checked="checked">
+                                 <span class="checkmark"></span>
+                                 </label>
+                                 <label class="checkbox-container">Parcial
+                                 <input type="checkbox" checked="checked">
+                                 <span class="checkmark"></span>
+                                 </label>
+                                 <label class="checkbox-container">Retorno
+                                 <input type="checkbox" checked="checked">
+                                 <span class="checkmark"></span>
+                                 </label>
+                              </div>
+                           </div>
                         </td>
                         <div class='bg-filter'>
-                        <td><input oninput='filterTable(this, 1)' placeholder='Buscar...' type='text'/></td>
-                        <td><input oninput='filterTable(this, 2)' placeholder='Buscar...' type='text'/></td>
-                        <td><input oninput='filterTable(this, 3)' placeholder='Buscar...' type='text'/></td>
-                        <td><input oninput='filterTable(this, 4)' placeholder='Buscar...' type='text'/></td>
+                           <td><input oninput='filterTable(this, 1)' placeholder='Buscar...' type='text'/></td>
+                           <td><input oninput='filterTable(this, 2)' placeholder='Buscar...' type='text'/></td>
+                           <td><input oninput='filterTable(this, 3)' placeholder='Buscar...' type='text'/></td>
+                           <td><input oninput='filterTable(this, 4)' placeholder='Buscar...' type='text'/></td>
+                           <td></td>
+                           <td></td>
+                        </div>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='estado' onclick='toggleDropdown(event)'>Opciones</button>
+                              <div class='dropdown-content' id='estado'>
+                                 <label><input type="checkbox" checked="checked" name="estado" value="Completado"> Completado</label>
+                                 <label><input type="checkbox" checked="checked" name="estado" value="Pendiente"> Pendiente</label>
+                                 <label><input type="checkbox" checked="checked" name="estado" value="Parcial"> Parcial</label>
+                                 <label><input type="checkbox" checked="checked" name="estado" value="Retorno"> Retorno</label>
+                              </div>
+                           </div>
+                        </td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='comprobante' onclick='toggleDropdown(event)'>Opciones</button>
+                              <div class='dropdown-content' id='comprobante'>
+                                 <label><input type="checkbox" checked="checked" name="comprobante" value="Facturado"> Facturado</label>
+                                 <label><input type="checkbox" checked="checked" name="comprobante" value="Boleta Simple"> Boleta Simple</label>
+                                 <label><input type="checkbox" checked="checked" name="comprobante" value="Boleta Electronica"> Boleta Electronica</label>
+                              </div>
+                           </div>
+                        </td>
+                        <td></td>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <!-- Asegúrate de reemplazar con datos dinámicos si es necesario -->
+                     <!-- La estructura se repite para cada fila con un ID único para cada dropdown -->
+                     <tr>
+                        <td>2024-02-21</td>
+                        <td>10000000000000</td>
+                        <td>Juan Angel Cobo</td>
+                        <td>Aprench S.R.L.</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown2' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown2'>
+                                 <a id="myBtn">Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-20</td>
+                        <td>10000000000000</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 19</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Boleta Simple</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown3' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown3'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-19</td>
+                        <td>10000000000000</td>
+                        <td>Juan Angel Cobo</td>
+                        <td>Alievel S.A.</td>
+                        <td>S/100.00</td>
+                        <td>S/50.00</td>
+                        <td>S/50.00</td>
+                        <td><span class="badge bg-partial">Parcial</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown4' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown4'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-18</td>
+                        <td>10000000000000</td>
+                        <td>Juan Angel Cobo</td>
+                        <td>Aprench S.R.L.</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown5' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown5'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-17</td>
+                        <td>10000000000000</td>
+                        <td>Maria Rosa Godoy</td>
+                        <td>Maria Rosa Godoy</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-return">Retorno</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown6' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown6'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-16</td>
+                        <td>10000000000000</td>
+                        <td>Maria Rosa Godoy</td>
+                        <td>Empresa 15</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown7' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown7'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-15</td>
+                        <td>10000000000000</td>
+                        <td>Maria Rosa Godoy</td>
+                        <td>Empresa 14</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown8' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown8'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-14</td>
+                        <td>10000000000000</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 13</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown9' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown9'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-13</td>
+                        <td>10000000000001</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 12</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown10' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown10'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-12</td>
+                        <td>10000000000000</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 11</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Boleta Electronica</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown11' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown11'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-11</td>
+                        <td>1000000000018</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 10</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown12' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown12'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-10</td>
+                        <td>1000000000017</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 09</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Boleta Electronica</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown13' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown13'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-09</td>
+                        <td>1000000000016</td>
+                        <td>Manuel Antonio Muñoz</td>
+                        <td>Empresa 09</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown14' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown14'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-08</td>
+                        <td>1000000000015</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 08</td>
+                        <td>S/100.00</td>
+                        <td>S/20.00</td>
+                        <td>S/80.00</td>
+                        <td><span class="badge bg-partial">Parcial</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown15' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown15'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-07</td>
+                        <td>1000000000014</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 08</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Boleta Electronica</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown16' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown16'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-06</td>
+                        <td>1000000000013</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 08</td>
+                        <td>S/100.00</td>
+                        <td>S/35.00</td>
+                        <td>S/65.00</td>
+                        <td><span class="badge bg-partial">Parcial</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown17' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown17'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-05</td>
+                        <td>1000000000012</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 04</td>
+                        <td>S/100.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Boleta Electronica</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown18' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown18'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-04</td>
+                        <td>1000000000011</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 04</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown19' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown19'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-03</td>
+                        <td>1000000000010</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 02</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td>S/100.00</td>
+                        <td><span class="badge bg-danger">Pendiente</span></td>
+                        <td>Facturado</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown20' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown20'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <!-- Repite las filas según sea necesario -->
+                     <tr>
+                        <td>2024-02-02</td>
+                        <td>10000000000009</td>
+                        <td>Cliente 1</td>
+                        <td>Empresa 01</td>
+                        <td>S/90.00</td>
+                        <td>S/100.00</td>
+                        <td>S/0.00</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                        <td>Boleta Electronica</td>
+                        <td>
+                           <div class='dropdown'>
+                              <button class='dropbtn js-ripple' data-dropdown='dropdown1' onclick='toggleDropdown(event)'>Acción</button>
+                              <div class='dropdown-content' id='dropdown1'>
+                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a href='#editarVenta'>Editar Venta</a>
+                                 <a href='#mostrarPago'>Mostrar Pagos</a>
+                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a href='#generarComprobante'>Comprobante</a>
+                                 <a href='#generarNotasalida'>Nota de Salida</a>
+                                 <a href='#descargarpdf'>Descargar PDF</a>
+                                 <a href='#enviarWspp'>Enviar por Wspp</a>
+                                 <a href='#eliminarFila'>Eliminar Pedido</a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+                  <tfoot>
+                     <tr class="total">
                         <td></td>
                         <td></td>
-                    </div>
+                        <td></td>
+                        <td><span class="badge bg-total">Monto Total</span></td>
+                        <td class="totalMonto">S/0.00</td>
+                        <td class="Pagado">S/0.00</td>
+                        <td class="totalPendiente">S/0.00</td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <div class='dropdown'>
-                                <button class='dropbtn js-ripple' data-dropdown='estado' onclick='toggleDropdown(event)'>Opciones</button>
-                                <div class='dropdown-content' id='estado'>
-                                  <label><input type="checkbox" checked="checked" name="estado" value="Completado"> Completado</label>
-                                  <label><input type="checkbox" checked="checked" name="estado" value="Pendiente"> Pendiente</label>
-                                  <label><input type="checkbox" checked="checked" name="estado" value="Parcial"> Parcial</label>
-                                  <label><input type="checkbox" checked="checked" name="estado" value="Retorno"> Retorno</label>
-                                </div>
-                              </div>
-                        </td>
-
-                        <td>
-                            <div class='dropdown'>
-                                <button class='dropbtn js-ripple' data-dropdown='comprobante' onclick='toggleDropdown(event)'>Opciones</button>
-                                <div class='dropdown-content' id='comprobante'>
-                                  <label><input type="checkbox" checked="checked" name="comprobante" value="Facturado"> Facturado</label>
-                                  <label><input type="checkbox" checked="checked" name="comprobante" value="Boleta Simple"> Boleta Simple</label>
-                                  <label><input type="checkbox" checked="checked" name="comprobante" value="Boleta Electronica"> Boleta Electronica</label>
-                                </div>
-                              </div>
-                        </td>
-
-                    <td></td>
-                
-
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Asegúrate de reemplazar con datos dinámicos si es necesario -->
-                <!-- La estructura se repite para cada fila con un ID único para cada dropdown -->
-                <tr>
-                    <td>2024-02-21</td>
-                    <td>10000000000000</td>
-                    <td>Juan Angel Cobo</td>
-                    <td>Aprench S.R.L.</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown2' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown2'>
-                                <a id="myBtn">Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-20</td>
-                    <td>10000000000000</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 19</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Boleta Simple</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown3' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown3'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-19</td>
-                    <td>10000000000000</td>
-                    <td>Juan Angel Cobo</td>
-                    <td>Alievel S.A.</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/50.00</td>
-                    <td>S/50.00</td>
-                    <td><span class="badge bg-partial">Parcial</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown4' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown4'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-18</td>
-                    <td>10000000000000</td>
-                    <td>Juan Angel Cobo</td>
-                    <td>Aprench S.R.L.</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown5' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown5'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-17</td>
-                    <td>10000000000000</td>
-                    <td>Maria Rosa Godoy</td>
-                    <td>Maria Rosa Godoy</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-return">Retorno</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown6' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown6'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-16</td>
-                    <td>10000000000000</td>
-                    <td>Maria Rosa Godoy</td>
-                    <td>Empresa 15</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown7' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown7'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-15</td>
-                    <td>10000000000000</td>
-                    <td>Maria Rosa Godoy</td>
-                    <td>Empresa 14</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown8' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown8'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-14</td>
-                    <td>10000000000000</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 13</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown9' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown9'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-13</td>
-                    <td>10000000000001</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 12</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown10' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown10'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-12</td>
-                    <td>10000000000000</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 11</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Boleta Electronica</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown11' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown11'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-11</td>
-                    <td>1000000000018</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 10</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown12' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown12'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-10</td>
-                    <td>1000000000017</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 09</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Boleta Electronica</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown13' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown13'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-09</td>
-                    <td>1000000000016</td>
-                    <td>Manuel Antonio Muñoz</td>
-                    <td>Empresa 09</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown14' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown14'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-08</td>
-                    <td>1000000000015</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 08</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/20.00</td>
-                    <td>S/80.00</td>
-                    <td><span class="badge bg-partial">Parcial</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown15' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown15'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-07</td>
-                    <td>1000000000014</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 08</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Boleta Electronica</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown16' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown16'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-06</td>
-                    <td>1000000000013</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 08</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/35.00</td>
-                    <td>S/65.00</td>
-                    <td><span class="badge bg-partial">Parcial</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown17' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown17'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-05</td>
-                    <td>1000000000012</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 04</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Boleta Electronica</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown18' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown18'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-04</td>
-                    <td>1000000000011</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 04</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown19' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown19'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-03</td>
-                    <td>1000000000010</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 02</td>
-                    
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td>S/100.00</td>
-                    <td><span class="badge bg-danger">Pendiente</span></td>
-                    <td>Facturado</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown20' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown20'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
-                <tr>
-                    <td>2024-02-02</td>
-                    <td>10000000000009</td>
-                    <td>Cliente 1</td>
-                    <td>Empresa 01</td>
-                    
-                    <td>S/90.00</td>
-                    <td>S/100.00</td>
-                    <td>S/0.00</td>
-                    <td><span class="badge bg-success">Completado</span></td>
-                    <td>Boleta Electronica</td>
-                    <td>
-                        <div class='dropdown'>
-                            <button class='dropbtn js-ripple' data-dropdown='dropdown1' onclick='toggleDropdown(event)'>Acción</button>
-                            <div class='dropdown-content' id='dropdown1'>
-                                <a href=./orden.html>Detalle de Venta</a>
-                                <a href='#editarVenta'>Editar Venta</a>
-                                <a href='#mostrarPago'>Mostrar Pagos</a>
-                                <a href='#registrarPago'>Registrar Pagos</a>
-                                <a href='#generarComprobante'>Comprobante</a>
-                                <a href='#generarNotasalida'>Nota de Salida</a>
-                                <a href='#descargarpdf'>Descargar PDF</a>
-                                <a href='#enviarWspp'>Enviar por Wspp</a>
-                                <a href='#eliminarFila'>Eliminar Pedido</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr class="total">         
-
-
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><span class="badge bg-total">Monto Total</span></td>
-                    <td class="totalMonto">>S/0.00</td>
-                    <td class="Pagado">S/0.00</td>
-                    <td class="totalPendiente">S/0.00</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-
-
-                  </tr>
-            </tfoot>
-
-
-        </table>
-
-        <div class="table-footer">
-            <div class="rows-per-page">
-              <label for="rows-per-page-select">Mostrar:</label>
-              <select id="rows-per-page-select">
-                <option value="15">15</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <!-- ... más opciones si es necesario ... -->
-              </select>
+                     </tr>
+                  </tfoot>
+               </table>
+               <div class="table-footer">
+                  <div class="rows-per-page">
+                     <label for="rows-per-page-select">Mostrar:</label>
+                     <select id="rows-per-page-select">
+                        <option value="15">15</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <!-- ... más opciones si es necesario ... -->
+                     </select>
+                  </div>
+                  <div class="pagination" id="pagination-container"></div>
+               </div>
             </div>
-
-
-            <div class="pagination" id="pagination-container"></div>
-          
+            <footer class='footer'>
+               <span class="cred">© Sistema de Ventas</span>
+            </footer>
+         </div>
+      </main>
+      <!-- The Modal -->
+      <div id="myModal" class="d-none modal">
+         <!-- Modal content -->
+         <div class="modal-content">
+            <div class="modal-header">
+               <span class="close">&times;</span>
+               <h2>Editar Venta</h2>
+            </div>
+            <div class="modal-body">
+               <div class="button-container">
+                  <button type="button" class="btn green">Editar venta</button>
+                  <button type="button" class="btn blue">Enviar por wspp</button>
+                  <button type="button" class="btn lightblue">Enviar SMS</button>
+                  <button type="button" class="btn orange">Descargar PDF</button>
+                  <button type="button" class="btn gray">Imprimir venta</button>
+                  <button type="button" class="btn red">Eliminar venta</button>
+               </div>
+               <div class="three-columns">
+                  <!-- Información del cliente -->
+                  <div class="info-section column">
+                     <h3>Información del cliente</h3>
+                     <p>Phyliss J. Cortés</p>
+                     <p>Phyliss@ejemplo.com</p>
+                     <p>0454 12 34 45</p>
+                     <p>22, Nueva York, EE. UU.</p>
+                  </div>
+                  <!-- Información de venta -->
+                  <div class="info-section column">
+                     <h3>Información de venta</h3>
+                     <p>Referencia: SO-20230616-035252</p>
+                     <p>Estado: Ordenado</p>
+                     <p>Estado de pago: Pagado</p>
+                     <p>Fecha: 2024-01-02 09:56:05</p>
+                     <p>Almacén: Almacén 2</p>
+                  </div>
+                  <!-- Dirección de envío -->
+                  <div class="info-section column">
+                     <h3>DIRECCIÓN DE ENVÍO</h3>
+                     <p>Juan Parker</p>
+                     <p>Sunset Str 598</p>
+                     <p>Melbourne</p>
+                     <p>Australia, 11-671</p>
+                     <p>(999) 888-7777</p>
+                     <p>empresa@ejemplo.com</p>
+                  </div>
+               </div>
+               <h2>Toda la lista de pedidos</h2>
+               <table>
+                  <thead>
+                     <tr>
+                        <th>#</th>
+                        <th>Nombre del Producto</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Descuentos</th>
+                        <th>Subtotal</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <!-- Productos ficticios con descuentos -->
+                     <tr>
+                        <td>1</td>
+                        <td>Producto A</td>
+                        <td>S/50.00</td>
+                        <td>2</td>
+                        <td>S/10.00</td>
+                        <td>S/90.00</td>
+                     </tr>
+                     <tr>
+                        <td>2</td>
+                        <td>Producto B</td>
+                        <td>S/30.00</td>
+                        <td>1</td>
+                        <td>S/5.00</td>
+                        <td>S/25.00</td>
+                     </tr>
+                     <!-- Agregar más filas según sea necesario -->
+                  </tbody>
+               </table>
+               <!-- Sección de Pagos -->
+               <h2>Toda la lista de pagos</h2>
+               <table>
+                  <thead>
+                     <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Referencia</th>
+                        <th>Monto</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <!-- Pagos ficticios -->
+                     <tr>
+                        <td>1</td>
+                        <td>2024-01-08</td>
+                        <td>REF001</td>
+                        <td>S/70.00</td>
+                     </tr>
+                     <tr>
+                        <td>2</td>
+                        <td>2024-01-09</td>
+                        <td>REF002</td>
+                        <td>S/30.00</td>
+                     </tr>
+                     <!-- Agregar más filas según sea necesario -->
+                  </tbody>
+               </table>
+               <!-- Sección Total -->
+               <div class="total-section">
+                  <p>Total Pedidos: <span>S/115.00</span></p>
+                  <p>Total Pagado: <span>S/100.00</span></p>
+                  <p>Saldo Restante: <span>S/15.00</span></p>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <h3>Cerrar</h3>
+            </div>
+         </div>
+      </div>
+      <!-- Modal content -->
+      <div class="overlay" id="overlay"></div>
+      <script src="modal.js" defer></script>
+      <script src="../js/funciones.js"></script>
+      <script src="../js/ux.js"></script>
+      <script src="../js/ux/icon.js"></script>
+      <script src="../js/tabla.js"></script>
+      <script src="../js/modal.js"></script>
+      <script src="../js/modalDetalle.js"></script>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+           var menuToggle = document.querySelector('.menu-toggle');
+           var header2 = document.querySelector('.header2');
+           var overlay = document.getElementById('overlay'); // Obtiene el overlay
          
-          </div>
-</div>
-
-<footer class='footer'>
-<span class="cred">© Sistema de Ventas</span>
-</footer>
-</div>
-</main>
-
-<!-- The Modal -->
-<div id="myModal" class="d-none modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>Editar Venta</h2>
-      </div>
-      <div class="modal-body">
-        
-
-
-
-
-        
-        <div class="button-container">
-            <button type="button" class="btn green">Editar venta</button>
-            <button type="button" class="btn blue">Enviar por wspp</button>
-            <button type="button" class="btn lightblue">Enviar SMS</button>
-            <button type="button" class="btn orange">Descargar PDF</button>
-            <button type="button" class="btn gray">Imprimir venta</button>
-            <button type="button" class="btn red">Eliminar venta</button>
-        </div>
-        <div class="three-columns">
-            <!-- Información del cliente -->
-            <div class="info-section column">
-                <h3>Información del cliente</h3>
-                <p>Phyliss J. Cortés</p>
-                <p>Phyliss@ejemplo.com</p>
-                <p>0454 12 34 45</p>
-                <p>22, Nueva York, EE. UU.</p>
-            </div>
-            
-            <!-- Información de venta -->
-            <div class="info-section column">
-                <h3>Información de venta</h3>
-                <p>Referencia: SO-20230616-035252</p>
-                <p>Estado: Ordenado</p>
-                <p>Estado de pago: Pagado</p>
-                <p>Fecha: 2024-01-02 09:56:05</p>
-                <p>Almacén: Almacén 2</p>
-            </div>
-
-            <!-- Dirección de envío -->
-            <div class="info-section column">
-                <h3>DIRECCIÓN DE ENVÍO</h3>
-                <p>Juan Parker</p>
-                <p>Sunset Str 598</p>
-                <p>Melbourne</p>
-                <p>Australia, 11-671</p>
-                <p>(999) 888-7777</p>
-                <p>empresa@ejemplo.com</p>
-            </div>
-        </div>
-        
-
-        <h2>Toda la lista de pedidos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre del Producto</th>
-                    <th>Precio Unitario</th>
-                    <th>Cantidad</th>
-                    <th>Descuentos</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Productos ficticios con descuentos -->
-                <tr>
-                    <td>1</td>
-                    <td>Producto A</td>
-                    <td>S/50.00</td>
-                    <td>2</td>
-                    <td>S/10.00</td>
-                    <td>S/90.00</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Producto B</td>
-                    <td>S/30.00</td>
-                    <td>1</td>
-                    <td>S/5.00</td>
-                    <td>S/25.00</td>
-                </tr>
-                <!-- Agregar más filas según sea necesario -->
-            </tbody>
-        </table>
-
-        <!-- Sección de Pagos -->
-        <h2>Toda la lista de pagos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Fecha</th>
-                    <th>Referencia</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Pagos ficticios -->
-                <tr>
-                    <td>1</td>
-                    <td>2024-01-08</td>
-                    <td>REF001</td>
-                    <td>S/70.00</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2024-01-09</td>
-                    <td>REF002</td>
-                    <td>S/30.00</td>
-                </tr>
-                <!-- Agregar más filas según sea necesario -->
-            </tbody>
-        </table>
-
-        <!-- Sección Total -->
-        <div class="total-section">
-            <p>Total Pedidos: <span>S/115.00</span></p>
-            <p>Total Pagado: <span>S/100.00</span></p>
-            <p>Saldo Restante: <span>S/15.00</span></p>
-        </div>
-
-
-
-      </div>
-      <div class="modal-footer">
-        <h3>Cerrar</h3>
-      </div>
-    </div>
-  
-  </div>
-
-
-    <!-- Modal content -->
-    
-    <div class="overlay" id="overlay"></div>
-
-
-        <script src="modal.js" defer></script>
-        <script src="js/funciones.js"></script>
-        <script src="js/ux.js"></script>
-        <script src="js/ux/icon.js"></script>
-        <script src="js/tabla.js"></script>
-        <script src="js/modal.js"></script>
-        <script src="js/modalDetalle.js"></script>
-
-
-
-
-<script>
-
-document.addEventListener('DOMContentLoaded', function() {
-  var menuToggle = document.querySelector('.menu-toggle');
-  var header2 = document.querySelector('.header2');
-  var overlay = document.getElementById('overlay'); // Obtiene el overlay
-
-  menuToggle.addEventListener('click', function() {
-    header2.classList.add('responsive');
-    overlay.classList.add('show-overlay'); // Muestra el overlay
-  });
-
-  // Cierra el menú lateral al hacer clic en el overlay
-  overlay.addEventListener('click', function() {
-    header2.classList.remove('responsive');
-    overlay.classList.remove('show-overlay'); // Oculta el overlay
-  });
-
-  // Cierra el menú lateral y el overlay al hacer clic en el botón de retroceso
-  var backButton = document.querySelector('.menu-back'); // Asegúrate de que este selector sea correcto
-  if (backButton) {
-    backButton.addEventListener('click', function() {
-      header2.classList.remove('responsive');
-      overlay.classList.remove('show-overlay'); // Oculta el overlay
-    });
-  }
-});
-</script>
-
-</body>
+           menuToggle.addEventListener('click', function() {
+             header2.classList.add('responsive');
+             overlay.classList.add('show-overlay'); // Muestra el overlay
+           });
+         
+           // Cierra el menú lateral al hacer clic en el overlay
+           overlay.addEventListener('click', function() {
+             header2.classList.remove('responsive');
+             overlay.classList.remove('show-overlay'); // Oculta el overlay
+           });
+         
+           // Cierra el menú lateral y el overlay al hacer clic en el botón de retroceso
+           var backButton = document.querySelector('.menu-back'); // Asegúrate de que este selector sea correcto
+           if (backButton) {
+             backButton.addEventListener('click', function() {
+               header2.classList.remove('responsive');
+               overlay.classList.remove('show-overlay'); // Oculta el overlay
+             });
+           }
+         });
+      </script>
+   </body>
 </html>
