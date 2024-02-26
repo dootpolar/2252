@@ -8,16 +8,21 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <title>Ordenes</title>
 <script>
-    (function() {
-      // Aplicar inmediatamente el modo oscuro si es necesario
-      if (localStorage.getItem('darkmode') === '1') {
-        document.documentElement.style.display = 'none';
-        document.documentElement.classList.add('darkmode');
-        document.addEventListener('DOMContentLoaded', (event) => {
-          document.documentElement.style.display = '';
-        });
-      }
-    })();
+User
+  //<![CDATA[
+          function darkmode_head() {
+                    if (localStorage.getItem("darkmode") == 1) {
+                        document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
+                    }
+           setTimeout(function(){
+                        var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
+                        document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
+                        document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
+                        document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
+           }, 1);
+                }
+          darkmode_head();
+          //]]>
   </script>
 </head>
 <body>
