@@ -5,10 +5,7 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/ux.css">
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
-
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <title>Ordenes</title>
 <script>
  //<![CDATA[
@@ -1048,10 +1045,44 @@ darkmode();
     <div class="overlay" id="overlay"></div>
 
 
+        <script src="modal.js" defer></script>
+        <script src="js/funciones.js"></script>
+        <script src="js/ux.js"></script>
+        <script src="js/ux/icon.js"></script>
+        <script src="js/tabla.js"></script>
+        <script src="js/modal.js"></script>
+        <script src="js/modalDetalle.js"></script>
+
+
+
 
 <script>
 
+document.addEventListener('DOMContentLoaded', function() {
+  var menuToggle = document.querySelector('.menu-toggle');
+  var header2 = document.querySelector('.header2');
+  var overlay = document.getElementById('overlay'); // Obtiene el overlay
 
+  menuToggle.addEventListener('click', function() {
+    header2.classList.add('responsive');
+    overlay.classList.add('show-overlay'); // Muestra el overlay
+  });
+
+  // Cierra el menú lateral al hacer clic en el overlay
+  overlay.addEventListener('click', function() {
+    header2.classList.remove('responsive');
+    overlay.classList.remove('show-overlay'); // Oculta el overlay
+  });
+
+  // Cierra el menú lateral y el overlay al hacer clic en el botón de retroceso
+  var backButton = document.querySelector('.menu-back'); // Asegúrate de que este selector sea correcto
+  if (backButton) {
+    backButton.addEventListener('click', function() {
+      header2.classList.remove('responsive');
+      overlay.classList.remove('show-overlay'); // Oculta el overlay
+    });
+  }
+});
 </script>
 
 </body>
