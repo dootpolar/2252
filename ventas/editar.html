@@ -42,6 +42,52 @@
      });
    };
    darkmode();
+
+
+
+
+   // Función para ajustar el modo oscuro y colores del tema al cargar la página
+function darkmode_head() {
+    if (localStorage.getItem("darkmode") == "1") {
+        document.documentElement.setAttribute('class', 'darkmode');
+    } else {
+        document.documentElement.classList.remove('darkmode'); // Asegura remover la clase si no está en modo oscuro
+    }
+
+    setTimeout(function() {
+        var themeColor = getComputedStyle(document.documentElement).getPropertyValue('--color-theme');
+        document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', themeColor);
+        document.querySelector('[name="msapplication-navbutton-color"]').setAttribute('content', themeColor);
+        document.querySelector('[name="theme-color"]').setAttribute('content', themeColor);
+    }, 1);
+}
+
+// Ejecuta darkmode_head al cargar para aplicar configuración de modo oscuro
+darkmode_head();
+
+// Función para manejar el clic en el botón de modo oscuro, sin jQuery
+function darkmode() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var darkModeButton = document.querySelector('.darkmode-button');
+        if (!darkModeButton) return; // Sale si no encuentra el botón
+
+        darkModeButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.documentElement.classList.toggle("darkmode");
+
+            if (localStorage.getItem("darkmode") == "1") {
+                localStorage.setItem("darkmode", "0");
+            } else {
+                localStorage.setItem("darkmode", "1");
+            }
+            // Reaplica los colores del tema tras cambiar el modo
+            darkmode_head();
+        });
+    });
+}
+
+// Inicializar la función darkmode
+darkmode();
      </script>
 </head>
 <body>
