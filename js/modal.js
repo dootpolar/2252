@@ -1,87 +1,38 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Función para crear y mostrar un modal
-  function crearYMostrarModal(contenidoHTML) {
-      // Crear el contenedor del modal
-      const modal = document.createElement('div');
-      modal.className = 'modal';
-      
-      // Configurar el HTML interno del modal con el contenido recibido
-      modal.innerHTML = contenidoHTML;
+// Get the modal
+var modal = document.getElementById('myModal');
 
-      // Añadir el modal al final del cuerpo del documento
-      document.body.appendChild(modal);
+// Get the button that opens the modal
+var btn = document.getElementById('myBtn');
 
-      // Mostrar el modal
-      modal.style.display = 'block';
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
-      // Función para cerrar el modal
-      function cerrarModal() {
-          modal.style.display = 'none';
-          modal.removeEventListener('click', cerrarEnFondo);
-          const closeBtn = modal.querySelector('.close');
-          if (closeBtn) {
-              closeBtn.removeEventListener('click', cerrarModal);
-          }
-          modal.parentNode.removeChild(modal);
-      }
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+    document.body.classList.add("modal-active"); // Prevent scrolling on body
+    setTimeout(() => { // Timeout for the CSS transition
+      modal.style.opacity = "1";
+      modal.querySelector('.modal-content').style.opacity = "1";
+      modal.querySelector('.modal-content').style.transform = "scale(1)";
+    }, 10);
+}
 
-      // Agregar evento al botón de cerrar si existe
-      const closeBtn = modal.querySelector('.close');
-      if (closeBtn) {
-          closeBtn.addEventListener('click', cerrarModal);
-      }
+// When the user clicks on <span> (x), or outside the modal, close it
+function closeModal() {
+    modal.style.opacity = "0";
+    modal.querySelector('.modal-content').style.opacity = "0";
+    modal.querySelector('.modal-content').style.transform = "scale(0.7)";
+    setTimeout(() => { // Timeout for the CSS transition
+      modal.style.display = "none";
+      document.body.classList.remove("modal-active"); // Re-enable scrolling on body
+    }, 300);
+}
 
-      // Evento para cerrar el modal al hacer clic fuera de él
-      function cerrarEnFondo(event) {
-          if (event.target === modal) {
-              cerrarModal();
-          }
-      }
-      window.addEventListener('click', cerrarEnFondo);
-  }
+span.onclick = closeModal;
 
-  // Contenido HTML para el modal de Detalle de Venta
-  const contenidoDetalleVenta = `
-      <div class="modal-content">
-          <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2>Detalle de Venta</h2>
-          </div>
-          <div class="modal-body">
-              <p>Contenido del detalle de venta...</p>
-          </div>
-          <div class="modal-footer">
-              <h3>Cerrar</h3>
-          </div>
-      </div>
-  `;
-
-  // Contenido HTML para el modal de Mostrar Pagos
-  const contenidoMostrarPagos = `
-      <div class="modal-content">
-          <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2>Mostrar Pagos</h2>
-          </div>
-          <div class="modal-body">
-              <p>Contenido de mostrar pagos...</p>
-          </div>
-          <div class="modal-footer">
-              <h3>Cerrar</h3>
-          </div>
-      </div>
-  `;
-
-  // ... Define aquí el resto de tus contenidos modales ...
-
-  // Event listeners para botones
-  document.getElementById('botonDetalleVenta').addEventListener('click', function() {
-      crearYMostrarModal(contenidoDetalleVenta);
-  });
-
-  document.getElementById('botonMostrarPagos').addEventListener('click', function() {
-      crearYMostrarModal(contenidoMostrarPagos);
-  });
-
-  // ... Agrega aquí los event listeners para el resto de tus botones ...
-});
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+}
