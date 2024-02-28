@@ -1,7 +1,30 @@
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
+.sticky-header-table {
+  width: 100%;
+  min-width: 600px; /* Asegúrate de que el ancho mínimo sea suficiente para contener todas tus columnas */
+}
 
+.sticky-header-table thead th {
+  position: sticky;
+  top: 0;
+  background: #FFF; /* Color de fondo para evitar que el texto de las filas se sobreponga */
+  z-index: 10;
+}
 
+.sticky-header-table tbody {
+  display: block;
+  max-height: 400px; /* Altura máxima para activar el desplazamiento vertical */
+  overflow-y: scroll;
+}
 
+.sticky-header-table th,
+.sticky-header-table td {
+  min-width: 120px; /* Ajusta esto según el ancho deseado para tus columnas */
+}
 
 html:not(.darkmode) {
   --color-theme:#ffffff;
@@ -432,7 +455,13 @@ border-radius: 8px;
     height: 24px;
 }
 
+.toggle-circle {transform: translateX(-15%);transition: transform 500ms ease-out;}
+.darkmode .toggle-circle {transform:translateX(0);}
+.toggle-sun {transform: rotate(0.5turn);transform-origin: center center;transition: transform 750ms cubic-bezier(0.11, 0.14, 0.29, 1.32);}
+.darkmode .toggle-sun {transform:rotate(0);}  
 
+.circular {animation: rotate 1s linear infinite;transform-origin: center center;width:22px;height:22px;margin: auto;}
+.path {stroke-dasharray: 1, 200;stroke-dashoffset: 0;animation: dash 1.5s ease infinite, color 2s ease infinite;stroke-linecap: round;}@keyframes rotate {100% {transform: rotate(360deg);}}@keyframes dash {0% {stroke-dasharray: 1, 200;stroke-dashoffset: 0;}50% {stroke-dasharray: 89, 200;stroke-dashoffset: -35px;}100% {stroke-dasharray: 89, 200;stroke-dashoffset: -124px;}}@keyframes color {0%,100% {stroke: var(--color-link);}40% {stroke: var(--color-link);}66% {stroke: var(--color-link);}80%,90% {stroke: var(--color-link);}}
 
 
 
@@ -623,20 +652,20 @@ button.dropbtn {
 }
 
 .sticky-header-table thead th {
-  border-top: 1px solid rgba(219, 224, 229, 0.65);
   position: sticky;
   top: 0;
+  background: #FFF; /* Color de fondo para evitar que el texto de las filas se sobreponga */
   z-index: 10;
 }
-
 
 
 /* Make sure the table body has a block layout to allow the tbody to scroll independently */
 .sticky-header-table tbody {
   display: block;
-  overflow-y: auto;
-  height: 400px; /* Adjust the height as needed */
+  max-height: 400px; /* Altura máxima para activar el desplazamiento vertical */
+  overflow-y: scroll;
 }
+
 
 /* Make sure table rows are displayed as table row */
 .sticky-header-table tbody tr {
@@ -648,7 +677,7 @@ button.dropbtn {
 /* For the table cells, use this if they need a fixed width */
 .sticky-header-table th,
 .sticky-header-table td {
-  width: calc(100% / 10); /* Adjust the division based on the number of columns you have */
+  min-width: 120px; /* Ajusta esto según el ancho deseado para tus columnas */
 }
 
 /* Apply the same width for thead and tbody */
