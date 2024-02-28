@@ -10,44 +10,33 @@
       <link rel="stylesheet" href="../css/styles.css">
       <link rel="stylesheet" href="../css/ux.css">
       <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
       <title>Ordenes</title>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
       <script>
-         //<![CDATA[
-         function darkmode_head() {
-                            if (localStorage.getItem("darkmode") == 1) {
-                                document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
-                            }
-                   setTimeout(function(){
-                                var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
-                                document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
-                                document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
-                                document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
-                   }, 1);
-                        }
-                  darkmode_head();
-                  //]]>
-           
-         // Dark Mode
-         function darkmode() {
-          if (localStorage.getItem("darkmode") == 1) {
-              $('.darkmode-button').toggleClass('');
-          }
-          $('.darkmode-button').on('click', function(e) {
-              e.preventDefault();
-              $("html").toggleClass("darkmode");
-              $('.darkmode-button').toggleClass('');
-              if (localStorage.getItem("darkmode") == 1) {
-                  localStorage.setItem("darkmode", 0);
-              } else {
-                  localStorage.setItem("darkmode", 1);
-              }
-              darkmode_head();
-          });
-         };
-         darkmode();
-          
+      snippet_count = 70;
+      //<![CDATA[
+      function removeHtmlTag(n,e){if(-1!=n.indexOf("<")){for(var t=n.split("<"),i=0;i<t.length;i++)-1!=t[i].indexOf(">")&&(t[i]=t[i].substring(t[i].indexOf(">")+1,t[i].length));n=t.join("")}for(e=e<n.length-1?e:n.length-2;" "!=n.charAt(e-1)&&-1!=n.indexOf(" ",e);)e++;return n=n.substring(0,e-1),n+"..."}function createSnippet(n){var e=document.getElementById(n),t=snippet_count,i='<div class="snippets">'+removeHtmlTag(e.innerHTML,t)+"</div>";e.innerHTML=i}
+      //]]>
       </script>
+      <script>
+      //<![CDATA[
+        function darkmode_head() {
+                  if (localStorage.getItem("darkmode") == 1) {
+                      document.getElementsByTagName('html')[0].setAttribute('class','darkmode');
+                  }
+         setTimeout(function(){
+                      var $theme_color = getComputedStyle(document.head).getPropertyValue('--color-theme');
+                      document.querySelector('[name="apple-mobile-web-app-status-bar-style"]').setAttribute( 'content', $theme_color );
+                      document.querySelector('[name="msapplication-navbutton-color"]').setAttribute( 'content', $theme_color );
+                      document.querySelector('[name="theme-color"]').setAttribute( 'content', $theme_color );
+         }, 1);
+              }
+        darkmode_head();
+        //]]>
+      </script>
+      
+
    </head>
    <body>
       <div class="header">
@@ -1039,5 +1028,23 @@
            }
          });
       </script>
+      <script>// Dark Mode
+         function darkmode() {
+          if (localStorage.getItem("darkmode") == 1) {
+              $('.darkmode-button').toggleClass('');
+          }
+          $('.darkmode-button').on('click', function(e) {
+              e.preventDefault();
+              $("html").toggleClass("darkmode");
+              $('.darkmode-button').toggleClass('');
+              if (localStorage.getItem("darkmode") == 1) {
+                  localStorage.setItem("darkmode", 0);
+              } else {
+                  localStorage.setItem("darkmode", 1);
+              }
+              darkmode_head();
+          });
+         };
+         darkmode();</script>
    </body>
 </html>
