@@ -1,31 +1,3 @@
-/* Estilos para dispositivos con un ancho máximo de 768px */
-@media screen and (max-width: 768px) {
-  .sticky-header-table {
-    display: block;
-    width: auto; /* Ajuste automático del ancho */
-    overflow-x: auto; /* Activa el desplazamiento horizontal */
-    -webkit-overflow-scrolling: touch; /* Permite un desplazamiento táctil fluido en iOS */
-  }
-
-  .sticky-header-table thead,
-  .sticky-header-table tbody,
-  .sticky-header-table tfoot {
-    display: block; /* Ajusta thead, tbody y tfoot a bloque para permitir el desplazamiento */
-  }
-
-  .sticky-header-table th,
-  .sticky-header-table td {
-    min-width: 120px; /* Establece un ancho mínimo para las celdas para mejorar la legibilidad */
-  }
-
-  .sticky-header-table th {
-    position: sticky;
-    top: 0; /* Mantiene la cabecera visible mientras se desplaza */
-    background-color: #FFF; /* Fondo de la cabecera */
-    z-index: 10; /* Asegura que la cabecera esté por encima del contenido al desplazar */
-  }
-}
-
 
 
 
