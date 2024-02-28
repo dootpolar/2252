@@ -27,11 +27,27 @@
 
 <div class="container">
     <div class="card">
-      <h2>Login</h2>
-      <form>
-        <input type="text" id="username" name="username" placeholder="Username" required>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        <button type="submit" > <a href="../dashboard">tablero</a></button>
-      </form>
+      <div class="login-container">
+        <h1>Sistema 1.0</h1>
+        <form action="/login" method="post">
+          <div class="form-group">
+            <label for="email">Dirección de correo electrónico</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required>
+            <span class="password-toggle">👁️</span>
+          </div>
+          <div class="form-group">
+            <input type="checkbox" id="remember-me" name="remember-me">
+            <label for="remember-me">Recordar Contraseña</label>
+          </div>
+          <div class="form-group">
+            <button type="submit">Acceso</button>
+          </div>
+          <a href="/forgot-password">¿Has olvidado tu contraseña?</a>
+          <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
+        </form>
     </div>
   </div>
