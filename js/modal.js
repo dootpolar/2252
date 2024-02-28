@@ -181,18 +181,7 @@ function closeModal() {
 document.getElementById('DetalleVenta').addEventListener('click', function() {
   mostrarModal('Detalle Venta', contenidoDetalleVenta);
 });
-document.getElementById('mostrarPagosBtn').addEventListener('click', function() {
-  mostrarModal('Mostrar Pagos', contenidoMostrarPagos);
-});
-document.getElementById('mostrarPagosBtn').addEventListener('click', function() {
-  mostrarModal('Mostrar Pagos', contenidoMostrarPagos);
-});
-document.getElementById('mostrarPagosBtn').addEventListener('click', function() {
-  mostrarModal('Mostrar Pagos', contenidoMostrarPagos);
-});
-document.getElementById('mostrarPagosBtn').addEventListener('click', function() {
-  mostrarModal('Mostrar Pagos', contenidoMostrarPagos);
-});
+
 // ... Repite para los demás botones ...
 
 // Evento para cerrar el modal cuando se hace clic en el botón de cierre o fuera del modal
