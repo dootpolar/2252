@@ -176,9 +176,10 @@ function closeModal() {
   }, 300);
 }
 
+
 // Event listeners para cada botón
 document.getElementById('DetalleVenta').addEventListener('click', function() {
-  mostrarModal('Detalle Venta', contenidoMostrarPagos);
+  mostrarModal('Detalle Venta', contenidoDetalleVenta);
 });
 document.getElementById('mostrarPagosBtn').addEventListener('click', function() {
   mostrarModal('Mostrar Pagos', contenidoMostrarPagos);
