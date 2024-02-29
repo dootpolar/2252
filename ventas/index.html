@@ -206,7 +206,7 @@
                      </div>
                   </div>
                </div>
-               <div class="table-responsive">
+               <div style="overflow-x:auto;">
                <table class=" sticky-header-table">
                   <thead>
                      <tr>
@@ -298,7 +298,7 @@
                                  <a id="myBtn">Detalle de Venta</a>
                                  <a href='#editarVenta'>Editar Venta</a>
                                  <a href='#mostrarPago'>Mostrar Pagos</a>
-                                 <a href='#registrarPago'>Registrar Pagos</a>
+                                 <a id="btnRegistrarPago">Registrar Pagos3</a>
                                  <a href='#generarComprobante'>Comprobante</a>
                                  <a href='#generarNotasalida'>Nota de Salida</a>
                                  <a href='#descargarpdf'>Descargar PDF</a>
@@ -323,7 +323,7 @@
                            <div class='dropdown'>
                               <button class='dropbtn js-ripple' data='dropdown3' >Acción</button>
                               <div class='dropdown-content' id='dropdown3'>
-                                 <a href=./orden.html>Detalle de Venta</a>
+                                 <a  class="modal-button" data-modal="modal1">Detalle de Venta6666</a>
                                  <a href='#editarVenta'>Editar Venta</a>
                                  <a href='#mostrarPago'>Mostrar Pagos</a>
                                  <a href='#registrarPago'>Registrar Pagos</a>
@@ -995,6 +995,64 @@
          </div>
       </div>
       <!-- Modal content -->
+
+
+
+
+      <div id="registrarPago" class="d-none modal">
+         <!-- Modal content -->
+         <div class="modal-content">
+            <div class="modal-header">
+               <span class="close">&times;</span>
+               <h2>Editar Venta</h2>
+            </div>
+            <div class="modal-body">
+
+
+               <form action="/ruta-para-procesar-formulario" method="post">
+                  <label for="fecha">Fecha</label>
+                  <input type="text" id="fecha" name="fecha" value="2024-02-28 04:49" readonly><br><br>
+                
+                  <label for="monto">Monto a pagar *</label>
+                  <input type="text" id="monto" name="monto" value="341.00" required><br><br>
+                
+                  <label for="opcion-pago">Opción de pago *</label>
+                  <select id="opcion-pago" name="opcion-pago" required>
+                    <option value="">Elige la opción de pago</option>
+                    <!-- Agregar opciones aquí -->
+                  </select><br><br>
+                
+                  <label for="cuenta">Cuenta</label>
+                  <select id="cuenta" name="cuenta" required>
+                    <option value="">Elige cuenta</option>
+                    <!-- Agregar opciones de cuenta aquí -->
+                  </select><br><br>
+                
+                  <label for="detalles">Por favor proporcione cualquier detalle</label>
+                  <textarea id="detalles" name="detalles"></textarea><br><br>
+                
+                  <input type="submit" value="Entregar">
+                </form>
+
+            </div>
+            <div class="modal-footer">
+               <h3>Cerrar</h3>
+            </div>
+         </div>
+      </div>
+      <!-- Modal content -->
+
+
+
+
+
+
+
+
+
+
+
+
       <div class="overlay" id="overlay"></div>
       <script src="modal.js" defer></script>
       <script src="../js/funciones.js"></script>
