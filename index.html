@@ -16,21 +16,71 @@
     <title>Ordenes</title>
 
 
-<style>
+    <style>
+body {
+  font-family: "Georgia", serif;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  color: #333;
+}
 
+.container-login {
+  width: 100%;
+  max-width: 400px;
+}
 
+.card {
+  background-color: #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+h2 {
+  text-align: center;
+}
 
+form {
+  display: flex;
+  flex-direction: column;
+}
 
+input {
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+  outline: none;
+  color: #333;
+}
 
-</style>
+input:focus {
+  border-color: #666;
+}
 
-<div class="container">
+button {
+  background-color: #666;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #333;
+}
+  </style>
+
+<div class="container-login">
     <div class="card">
-<<<<<<< HEAD
-=======
       <h2>Login</h2>
->>>>>>> 5c565403ce5f5ab05dc7ba9556062a0fd3006e1a
       <div class="login-container">
         <h1>Sistema 1.0</h1>
         <form action="/login" method="post">
